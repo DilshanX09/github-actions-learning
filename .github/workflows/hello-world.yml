@@ -1,4 +1,5 @@
 name: Hello World Workflow
+description: Simple Hello World Workflow Description
 
 on:
   push:
