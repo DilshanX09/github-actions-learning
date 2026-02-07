@@ -1,4 +1,5 @@
 name: Build and Test
+description: A workflow to build and test the sample application on multiple Node.js versions.
 
 on:
   push:
@@ -17,31 +18,22 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x]
-
-    # Define environment variables for the job
-    env:
-      NODE_ENV: test
-      LOG_LEVEL: debug
+        node-version: [16.x, 18.x]
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-
-        # Print environment variables for debugging
-      - name: Print environment
-        run: |
-          echo "Environment: ${{ env.NODE_ENV }}"
-          echo "Log Level: ${{ env.LOG_LEVEL }}"
+        uses: actions/checkout@v3
 
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: "sample-app/package-lock.json"
 
       - name: Install dependencies
         working-directory: ./sample-app
-        run: npm install
+        run: npm ci
 
       - name: Run linter
         working-directory: ./sample-app
@@ -51,17 +43,6 @@ jobs:
       - name: Build application
         working-directory: ./sample-app
         run: npm run build
-
-      # Create a dummy artifact to demonstrate artifact upload
-      - name: Create artifact
-        run: echo "Build output" > output.txt
-
-      # Upload the artifact for later use in the workflow
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-output-${{ matrix.node-version }}
-          path: output.txt
 
       - name: Run tests
         working-directory: ./sample-app
@@ -110,13 +91,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
           node-version: "18"
+          cache: "npm"
+          cache-dependency-path: "sample-app/package-lock.json"
 
-      - name: Install dependencies
-        working-directory: ./sample-app
-        run: npm install
+      - working-directory: ./sample-app
+        run: npm ci
 
       - name: Run ESLint
         working-directory: ./sample-app
