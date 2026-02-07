@@ -1,0 +1,31 @@
+name: Custom Workflow
+description: A custom workflow for sample-app that runs on push to develop branch. It checks out the code and runs npm install and npm test in the sample-app directory.
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  
+  custom-job:
+    # This job runs on the latest Ubuntu environment
+    runs-on: ubuntu-latest
+
+    # This job consists of a single step that checks out the code and runs npm install and npm test in the sample-app directory
+    steps:
+      # This step checks out the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # This step sets up Node.js version 18
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      # This step runs npm install and npm test in the sample-app directory
+      - name: Run npm install && npm test in the sample-app directory
+        working-directory: ./sample-app
+        run: |
+          npm install
+          npm test
