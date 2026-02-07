@@ -95,7 +95,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: build-output-${{ matrix.node-version }}
+          name: build-output-18.x
 
       # Verify the artifact content
       - name: Display artifact content
