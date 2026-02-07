@@ -1,3 +1,7 @@
+/*
+* Simple Express server for GitHub Actions learning app
+* Provides basic API endpoints for testing and demonstration
+*/
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -33,7 +37,7 @@ app.get('/api/status', (req, res) => {
 
 app.post('/api/data', (req, res) => {
   const { text } = req.body;
-  
+
   if (!text) {
     return res.status(400).json({ error: 'Text field is required' });
   }
