@@ -98,7 +98,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./sample-app
-        run: npm ci
+        run: npm install
 
       - name: Run ESLint
         working-directory: ./sample-app
