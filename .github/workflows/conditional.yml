@@ -1,0 +1,19 @@
+name: Conditional Workflow
+description: A workflow that demonstrates conditional execution of jobs and steps.
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "sample-app/**"
+      - ".github/workflows/conditional.yml"
+
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy ( main branch only )
+        if: github.ref == 'refs/heads/main'
+        run: echo "Deploying to production environment..."
