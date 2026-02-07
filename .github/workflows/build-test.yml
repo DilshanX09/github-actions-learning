@@ -38,12 +38,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-          cache-dependency-path: 'sample-app/package-lock.json'
       
       - name: Install dependencies
         working-directory: ./sample-app
-        run: npm ci
+        run: npm install
       
       - name: Run linter
         working-directory: ./sample-app
@@ -90,7 +88,7 @@ jobs:
           cache-dependency-path: 'sample-app/package-lock.json'
       
       - working-directory: ./sample-app
-        run: npm ci
+        run: npm install
       
       - name: Run ESLint
         working-directory: ./sample-app
